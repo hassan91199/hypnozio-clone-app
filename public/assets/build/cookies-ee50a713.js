@@ -1,0 +1,1 @@
+window.setCookie=(n,r,i)=>{var t=new Date;t.setTime(t.getTime()+i*24*60*60*1e3);var e="expires="+t.toGMTString();document.cookie=n+"="+r+"; "+e};window.getCookie=n=>{for(var r=n+"=",i=document.cookie.split(";"),t=0;t<i.length;t++){for(var e=i[t];e.charAt(0)===" ";)e=e.substring(1);if(e.indexOf(r)!==-1)return e.substring(r.length,e.length)}return""};
