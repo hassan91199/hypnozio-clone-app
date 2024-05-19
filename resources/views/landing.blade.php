@@ -275,15 +275,15 @@
                             </div>
                             <div class="flex flex-wrap items-center mt-4 md:mt-6 justify-center lg:justify-center gap-4 lg:gap-6">
                                 <!-- assets/test/hypnozio-quiz/vmmab7j.html?gender=female -->
-                                <a class="cursor-pointer link w-[161px] sm:w-[267px] md:w-[275px] lg:w-[204px] xl:w-[246px] h-12 lg:h-16 cursor-pointer btn btn-accent" id="" @click="userGender = 'female'" href="" x-on:click="sendHypnozioQuizAnswerClickedEvent('Select your gender', userGender); sendHypnozioQuizStartedEvent()">
+                                <a class="cursor-pointer link w-[161px] sm:w-[267px] md:w-[275px] lg:w-[204px] xl:w-[246px] h-12 lg:h-16 cursor-pointer btn btn-accent" id="" @click="userGender = 'female'" href="{{ route('quiz') }}" x-on:click="sendHypnozioQuizAnswerClickedEvent('Select your gender', userGender); sendHypnozioQuizStartedEvent()">
                                     Female
                                 </a>
                                 <!-- assets/test/hypnozio-quiz/o44x70v.html?gender=male -->
-                                <a class="cursor-pointer link w-[161px] sm:w-[267px] md:w-[275px] lg:w-[204px] xl:w-[246px] h-12 lg:h-16 cursor-pointer btn btn" id="" @click="userGender = 'male'" href="" x-on:click="sendHypnozioQuizAnswerClickedEvent('Select your gender', userGender); sendHypnozioQuizStartedEvent()">
+                                <a class="cursor-pointer link w-[161px] sm:w-[267px] md:w-[275px] lg:w-[204px] xl:w-[246px] h-12 lg:h-16 cursor-pointer btn btn" id="" @click="userGender = 'male'" href="{{ route('quiz') }}" x-on:click="sendHypnozioQuizAnswerClickedEvent('Select your gender', userGender); sendHypnozioQuizStartedEvent()">
                                     Male
                                 </a>
                                 <!-- assets/test/hypnozio-quiz/neebg3r.html?gender=other -->
-                                <a class="cursor-pointer link w-[161px] sm:w-[267px] md:w-[275px] lg:w-[204px] xl:w-[246px] h-12 lg:h-16 cursor-pointer btn btn-outlined" id="" @click="userGender = 'other'" href="" x-on:click="sendHypnozioQuizAnswerClickedEvent('Select your gender', userGender); sendHypnozioQuizStartedEvent()">
+                                <a class="cursor-pointer link w-[161px] sm:w-[267px] md:w-[275px] lg:w-[204px] xl:w-[246px] h-12 lg:h-16 cursor-pointer btn btn-outlined" id="" @click="userGender = 'other'" href="{{ route('quiz') }}" x-on:click="sendHypnozioQuizAnswerClickedEvent('Select your gender', userGender); sendHypnozioQuizStartedEvent()">
                                     Other
                                 </a>
                             </div>
