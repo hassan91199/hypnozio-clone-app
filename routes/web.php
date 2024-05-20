@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,5 @@ Route::get('/', function () {
 Route::get('/quiz', function () {
     return view('quiz.index');
 })->name('quiz');
+
+Route::post('/quiz', [QuizController::class, 'submit'])->name('submit-quiz');

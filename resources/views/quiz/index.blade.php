@@ -44,7 +44,8 @@
                 'https://hypnozio.com/verify/email',
                 false)
             " :key="'test-' + questionKey">
-                    <form action="https://hypnozio.com/test/hypnozio-quiz/vmmab7j" novalidate method="post" class="" x-data="{ metricSystem: 'metric', bmi }" x-on:submit.prevent="submitForm($event.target, metricSystem, false, false, false, false)" x-ref="form">
+                    <form action="{{ route('submit-quiz') }}" novalidate method="post" class="" x-data="{ metricSystem: 'metric', bmi }" x-on:submit.prevent="submitForm($event.target, metricSystem, false, false, false, false)" x-ref="form">
+                        @csrf
                         <input type="hidden" name="score" x-bind:value="data.encodedScore">
                         <input type="hidden" name="answers" x-bind:value="data.encodedAnswers">
                         <div class="w-full bg-neutral-95 h-2">
