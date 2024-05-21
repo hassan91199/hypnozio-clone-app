@@ -1,0 +1,1 @@
+function n(o,t){return fetch(t,{method:"post",body:JSON.stringify({email:o}),headers:{Accept:"application/json","Content-Type":"application/json"}}).then(e=>e.json()).catch(e=>{console.error("There has been a problem with your fetch operation:",e)})}export{n as v};
