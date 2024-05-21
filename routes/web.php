@@ -23,3 +23,7 @@ Route::get('/quiz', function () {
 })->name('quiz');
 
 Route::post('/quiz', [QuizController::class, 'submit'])->name('submit-quiz');
+
+Route::get('/checkout', function () {
+    return view('checkout.index');
+});
