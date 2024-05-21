@@ -77,11 +77,5 @@ class QuizController extends Controller
         $quizSubmission = QuizSubmission::updateOrCreate(['email' => $email], $data);
 
         return view('quiz.summary');
-
-
-        // if (!isset($quizSubmission))
-        //     return response()->json(['message' => 'There was a problem updating or creating quiz submission']);
-
-        // return response()->json(['message' => 'Quiz submission updated or created successfully']);
     }
 }
