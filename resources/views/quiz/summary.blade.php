@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> <a class="cursor-pointer link text-label-extra-large text-center text-white font-bold bg-primary hover:bg-primary-50 hover:shadow-2 py-[17px] rounded min-w-[340px] lg:min-w-[360px] mx-auto mt-6 lg:mt-10" id="" href="">
+                        </div> <a class="cursor-pointer link text-label-extra-large text-center text-white font-bold bg-primary hover:bg-primary-50 hover:shadow-2 py-[17px] rounded min-w-[340px] lg:min-w-[360px] mx-auto mt-6 lg:mt-10" id="" href="{{ route('checkout') }}">
                             Get my plan
                         </a>
                     </div>
@@ -195,7 +195,7 @@
                                 <div class="text-body-medium lg:text-body-large text-onSurface text-center">Hypnotherapy can break the cycle of chronic dieting by addressing emotional and psychological causes, promoting a healthy relationship with food and body.</div>
                             </div>
                         </div>
-                        <a class="cursor-pointer link text-label-extra-large text-center text-white font-bold bg-primary hover:bg-primary-50 hover:shadow-2 py-[17px] rounded min-w-[340px] lg:min-w-[360px] mx-auto mt-6 lg:mt-10" id="" href="">
+                        <a class="cursor-pointer link text-label-extra-large text-center text-white font-bold bg-primary hover:bg-primary-50 hover:shadow-2 py-[17px] rounded min-w-[340px] lg:min-w-[360px] mx-auto mt-6 lg:mt-10" id="" href="{{ route('checkout') }}">
                             Get my plan
                         </a>
                     </div>
@@ -358,7 +358,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="cursor-pointer link text-label-extra-large text-center text-white font-bold bg-primary hover:bg-primary-50 hover:shadow-2 py-[17px] rounded min-w-[340px] lg:min-w-[360px] mx-auto mt-8 lg:mt-10" id="" href="">
+                        <a class="cursor-pointer link text-label-extra-large text-center text-white font-bold bg-primary hover:bg-primary-50 hover:shadow-2 py-[17px] rounded min-w-[340px] lg:min-w-[360px] mx-auto mt-8 lg:mt-10" id="" href="{{ route('checkout') }}">
                             Get my plan
                         </a>
                     </div>
