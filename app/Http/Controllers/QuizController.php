@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\QuizSubmission;
-
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class QuizController extends Controller
 {
@@ -19,69 +20,89 @@ class QuizController extends Controller
         // Capture the request data
         $requestData = $request->all();
 
-        $height = "";
-        $weight = "";
-        $desiredWeight = "";
+        $gender = "";
+        $cid = request()->query('cid') ?? '';
+        $sid = request()->query('sid') ?? '';
 
-        if (isset($requestData['metrics']['metric_height'])) {
-            $height = $requestData['metrics']['metric_height'];
-            $height = "$height cm";
+        switch (request()->query('g')) {
+            case 'm':
+                $gender = "male";
+                break;
+            case 'f':
+                $gender = "female";
+                break;
+            case 'o':
+                $gender = "other";
+                break;
 
-            $weight = $requestData['metrics']['metric_weight'];
-            $weight = "$weight kg";
-
-            $desiredWeight = $requestData['metrics']['metric_desired_weight'];
-            $desiredWeight = "$desiredWeight kg";
-        }
-
-        if (isset($requestData['metrics']['imperial_height_feet'])) {
-            $heightInFeet = $requestData['metrics']['imperial_height_feet'];
-            $heightInInches = $requestData['metrics']['imperial_height_inches'];
-
-            $height = "$heightInFeet ft $heightInInches inch";
-
-            $weight = $requestData['metrics']['imperial_weight'];
-            $weight = "$weight lb";
-
-            $desiredWeight = $requestData['metrics']['imperial_desired_weight'];
-            $desiredWeight = "$desiredWeight lb";
-        }
-
-        // Check if 'answers' field exists and decode the JSON string
-        if (isset($requestData['answers'])) {
-            $answers = json_decode($requestData['answers'], true); // true to get an associative array
-        } else {
-            $answers = [];
+            default:
+                break;
         }
 
         $data = [];
 
-        // Organizing the answers
-        foreach ($answers as $questionNumber => $answer) {
-            $correctedQuestionNumber = $questionNumber + 1;
-
-            if (isset($answer['answerText'])) {
-                $data["answer_{$correctedQuestionNumber}"] = array_keys($answer)[0];
-            } else {
-                $data["answer_{$correctedQuestionNumber}"] =  implode(", ", array_keys($answer));
+        // Handle metric data
+        if (!empty($requestData['metrics'])) {
+            $metrics = $requestData['metrics'];
+            if (isset($metrics['metric_height'])) {
+                $data['height'] = "{$metrics['metric_height']} cm";
+                $data['weight'] = "{$metrics['metric_weight']} kg";
+                $data['desired_weight'] = "{$metrics['metric_desired_weight']} kg";
+            } elseif (isset($metrics['imperial_height_feet'])) {
+                $data['height'] = "{$metrics['imperial_height_feet']} ft {$metrics['imperial_height_inches']} inch";
+                $data['weight'] = "{$metrics['imperial_weight']} lb";
+                $data['desired_weight'] = "{$metrics['imperial_desired_weight']} lb";
             }
         }
 
+        // Decode answers if exists
+        $answers = isset($requestData['answers']) ? json_decode($requestData['answers'], true) : [];
+
+        // Organizing the answers
+        foreach ($answers as $index => $answer) {
+            if ($index == 22) break;
+            $questionNumber = $index + 1;
+
+            $data["answer_{$questionNumber}"] = isset($answer['answerText'])
+                ? array_keys($answer)[0]
+                : implode(", ", array_keys($answer));
+        }
+
         $email = $requestData['email'];
-        $data['answer_23'] = $email;
+        $data['email'] = $email;
+        $data['gender'] = $gender;
+        $data['cid'] = $cid;
+        $data['sid'] = $sid;
 
-        $data['height'] = $height;
-        $data['weight'] = $weight;
-        $data['desired_weight'] = $desiredWeight;
+        // Find or create the user based on email
+        $user = User::updateOrCreate(
+            ['email' => $email],
+            ['gender' => $gender]
+        );
 
-        $quizSubmission = QuizSubmission::updateOrCreate(['email' => $email], $data);
+        $data['user_id'] = $user->id;
+
+        QuizSubmission::updateOrCreate(
+            ['email' => $email],
+            $data
+        );
+
+        // Send the data to convertkit
+        $convertKitApiKey = config('convertkit.api_key');
+        $formId = config('convertkit.quiz_form_id');
+        $convertKitApiUrl = "https://api.convertkit.com/v3/forms/$formId/subscribe";
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post($convertKitApiUrl, [
+            'api_key' => $convertKitApiKey,
+            'email' => $email,
+            'fields' => [
+                'cid' => $cid,
+                'sid' => $sid,
+            ],
+        ]);
 
         return view('quiz.summary');
-
-
-        // if (!isset($quizSubmission))
-        //     return response()->json(['message' => 'There was a problem updating or creating quiz submission']);
-
-        // return response()->json(['message' => 'Quiz submission updated or created successfully']);
     }
 }

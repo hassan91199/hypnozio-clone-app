@@ -15,7 +15,20 @@ use App\Http\Controllers\QuizController;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    $queryParams = [
+        'cid' => request()->query('cid'),
+        'sid' => request()->query('sid'),
+    ];
+
+    $funnelParams = http_build_query($queryParams);
+
+    $quizLink = route('quiz') . '?' . $funnelParams;
+
+    $maleQuizLink = "$quizLink&g=m";
+    $femaleQuizLink = "$quizLink&g=f";
+    $otherQuizLink = "$quizLink&g=o";
+
+    return view('landing', compact('maleQuizLink', 'femaleQuizLink', 'otherQuizLink'));
 });
 
 Route::get('/quiz', function () {
