@@ -31,5 +31,9 @@ class QuizSubmission extends Model
         'height',
         'weight',
         'desired_weight',
+        'user_id',
+        'gender',
+        'cid',
+        'sid'
     ];
 }
